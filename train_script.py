@@ -39,10 +39,10 @@ def main(load = None):
 
     num_classes = 100
     train_dataset = LabeledDataset(root='/labeled', split="training", transforms=get_transform(train=True))
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=1, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=16, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)
 
     valid_dataset = LabeledDataset(root='/labeled', split="validation", transforms=get_transform(train=False))
-    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=2, collate_fn=utils.collate_fn)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=16, shuffle=False, num_workers=2, collate_fn=utils.collate_fn)
 
     model = get_model(num_classes)
     model.to(device)

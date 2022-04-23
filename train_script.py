@@ -57,11 +57,11 @@ def main(load = None):
         optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
         prev_epoch = checkpoint['epoch']
 
-    num_epochs = 10
+    num_epochs = 70
 
     for epoch in range(prev_epoch, prev_epoch + num_epochs):
         # train for one epoch, printing every 10 iterations
-        train_one_epoch(model, optimizer, train_loader, device, epoch, print_freq=10)
+        train_one_epoch(model, optimizer, train_loader, device, epoch, print_freq=50)
         # update the learning rate
         lr_scheduler.step()
         # evaluate on the test dataset

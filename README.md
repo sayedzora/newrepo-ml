@@ -1,4 +1,3 @@
 # newrepo-ml
 
-
-To evaluate, the `evaluate_script.py` has to be run with the path of our pretrained weight as argument in `main.py` function.
+In order to run the evaluation, the `evaluate_script.py` has to be run. The path of the pretrained weight has to be passed as an argumant of `main` function at `line 57` of the evaluation_script.

@@ -54,4 +54,4 @@ def main(load = None):
     print("Evaluation Completed")
 
 if __name__ == "__main__":
-    main(load = "C:\practice_python\prev_epoch_0_weight.pth")
+    main(load = "best_weight.pth")

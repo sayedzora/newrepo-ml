@@ -196,3 +196,57 @@ class LabeledDataset(torch.utils.data.Dataset):
             img, target = self.transforms(img, target)
         
         return img, target
+
+
+
+class NewlabeledDataset(torch.utils.data.Dataset):
+    def __init__(self, transforms):
+        r"""
+        Args:
+            root: Location of the dataset folder, usually it is /labeled
+            split: The split you want to used, it should be training or validation
+            transform: the transform you want to applied to the images.
+        """
+
+        # self.split = split
+        self.transforms = transforms
+
+        self.image_dir = os.path.join("/unlabeled")
+        self.label_dir = os.path.join("/unlabeled_anotations")
+
+        self.num_images = len(os.listdir(self.image_dir))
+    
+    def __len__(self):
+        return self.num_images #self.num_images
+
+    def __getitem__(self, idx):
+
+        offset = 0
+
+        with open(os.path.join(self.image_dir, f"{idx + offset}.PNG"), 'rb') as f:
+            img = Image.open(f).convert('RGB')
+        with open(os.path.join(self.label_dir, f"{idx + offset}.yml"), 'rb') as f:
+            yamlfile = yaml.load(f, Loader=yaml.FullLoader)
+
+        num_objs = len(yamlfile['labels'])
+        #xmin, ymin, xmax, ymax
+        boxes = torch.as_tensor(yamlfile['bboxes'], dtype=torch.float32)
+        labels = []
+        for label in yamlfile['labels']:
+            labels.append(class_dict[label])
+        labels = torch.as_tensor(labels, dtype=torch.int64)
+        image_id = torch.tensor([idx])
+        area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
+        iscrowd = torch.zeros((num_objs,), dtype=torch.int64)
+
+        target = {}
+        target["boxes"] = boxes
+        target["labels"] = labels
+        target["image_id"] = image_id
+        target["area"] = area
+        target["iscrowd"] = iscrowd
+
+        if self.transforms is not None:
+            img, target = self.transforms(img, target)
+        
+        return img, target

@@ -112,7 +112,7 @@ class_dict = {
 }
 
 class UnlabeledDataset(torch.utils.data.Dataset):
-    def __init__(self, root, transform):
+    def __init__(self, root, transform,  send_target = False):
         r"""
         Args:
             root: Location of the dataset folder, usually it is /unlabeled
@@ -122,6 +122,7 @@ class UnlabeledDataset(torch.utils.data.Dataset):
 
         self.image_dir = root
         self.num_images = len(os.listdir(self.image_dir))
+        self.send_target = send_target
     
     def __len__(self):
         return self.num_images
@@ -131,7 +132,13 @@ class UnlabeledDataset(torch.utils.data.Dataset):
         with open(os.path.join(self.image_dir, f"{idx}.PNG"), 'rb') as f:
             img = Image.open(f).convert('RGB')
 
-        return self.transform(img)
+        target = {}
+        target["image_id"] = torch.tensor([idx])
+        target["image_size"] = img.size
+
+        if self.send_target:
+            return self.transform(img, target)
+        return self.transform(img, target)[0]
 
 class LabeledDataset(torch.utils.data.Dataset):
     def __init__(self, root, split, transforms):

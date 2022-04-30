@@ -194,6 +194,6 @@ if __name__ == "__main__":
 
     
     weight_path = "prev_epoch_0_weight.pth"
-    image_dir = r"labeled\training\images"
+    image_dir = r"/unlabeled"
     annotations_path = 'unlabeled_anotations'
     main(load = "epoch_19_weight.pth")

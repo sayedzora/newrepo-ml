@@ -81,4 +81,4 @@ def main(load = None):
     print("That's it!")
 
 if __name__ == "__main__":
-    main(load="epoch_21_weight.pty")
+    main(load="epoch_21_weight.pth")

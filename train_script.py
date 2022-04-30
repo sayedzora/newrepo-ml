@@ -76,4 +76,4 @@ def main(load = None):
     print("That's it!")
 
 if __name__ == "__main__":
-    main()
+    main(load="epoch_21_weight.pth")

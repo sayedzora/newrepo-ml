@@ -41,7 +41,7 @@ def main(load = None):
 
     num_classes = 100
     train_dataset = LabeledDataset(root='/labeled', split="training", transforms=get_transform(train=True))
-    train_dataset_2 = LabeledDataset(transforms=get_transform(train=False))
+    train_dataset_2 = NewlabeledDataset(transforms=get_transform(train=False))
     train_dataset = ConcatDataset([train_dataset, train_dataset_2])
 
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=2, collate_fn=utils.collate_fn)

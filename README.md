@@ -1,4 +1,4 @@
-# Training Steps and Details
+# Training Steps and Details :-
 
 1. Run `training_script.py`. It will generate initial training weight from only labelled data.Get latest weight from it.
 2. Run `evaluation_script.py` with latest weight path if you want to submit only this much work. 
